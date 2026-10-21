@@ -13,7 +13,10 @@ ENV     VERGEN_GIT_SHA=${COMMIT_SHA} VERGEN_GIT_COMMIT_TIMESTAMP=${COMMIT_DATE} 
 ENV     RUSTFLAGS="-C target-feature=-crt-static"
 
 COPY    . .
-RUN     set -eux; \
+RUN --mount=type=cache,target=/usr/local/cargo/registry \
+        --mount=type=cache,target=/usr/local/cargo/git \
+        --mount=type=cache,target=/target \
+        set -eux; \
         apkArch="$(apk --print-arch)"; \
         cargo build --release -p meilisearch -p meilitool ${EXTRA_ARGS}
 

@@ -23,9 +23,9 @@ jobs:
         edition: [community, enterprise]
         include:
           - platform: amd64
-            runner: ubuntu-24.04
+            runner: blacksmith-8vcpu-ubuntu-2204
           - platform: arm64
-            runner: ubuntu-24.04-arm
+            runner: blacksmith-8vcpu-ubuntu-2204-arm
           - edition: community
             registry: getmeili/meilisearch
             feature-flag: ""
@@ -43,9 +43,9 @@ jobs:
           echo "PLATFORM_PAIR=${platform//\//-}" >> $GITHUB_ENV
 
       - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@bb05f3f5519dd87d3ba754cc423b652a5edd6d2c # v4
+        uses: useblacksmith/setup-docker-builder@v2
         with:
-          platforms: linux/${{ matrix.platform }}
+          cache-key: meilisearch-${{ matrix.edition }}-${{ matrix.platform }}
 
       - name: Login to Docker Hub
         uses: docker/login-action@650006c6eb7dba73a995cc03b0b2d7f5ca915bee # v4
@@ -69,7 +69,7 @@ jobs:
             type=raw,value=latest,enable=${{ steps.check-tag-format.outputs.stable == 'true' && steps.check-tag-format.outputs.latest == 'true' }}
 
       - name: Build and push by digest
-        uses: docker/build-push-action@10e90e3645eae34f1e60eeb005ba3a3d33f178e8 # v6
+        uses: useblacksmith/build-push-action@v2
         id: build-and-push
         with:
           platforms: linux/${{ matrix.platform }}
