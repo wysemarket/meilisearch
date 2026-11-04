@@ -7,7 +7,7 @@ on:
 jobs:
   check-version:
     name: Check the version validity
-    runs-on: ubuntu-latest
+    runs-on: ${{ vars.CI_RUNNER_PROVIDER == 'github' && 'ubuntu-24.04' || 'blacksmith-2vcpu-ubuntu-2404' }}
     steps:
       - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
       - name: Check release validity
@@ -15,7 +15,7 @@ jobs:
 
   debian:
     name: Publish debian packagge
-    runs-on: ubuntu-latest
+    runs-on: ${{ vars.CI_RUNNER_PROVIDER == 'github' && 'ubuntu-24.04' || 'blacksmith-2vcpu-ubuntu-2404' }}
     needs: check-version
     container:
       # Use ubuntu-22.04 to compile with glibc 2.35
@@ -48,7 +48,7 @@ jobs:
 
   homebrew:
     name: Bump Homebrew formula
-    runs-on: ubuntu-latest
+    runs-on: ${{ vars.CI_RUNNER_PROVIDER == 'github' && 'ubuntu-24.04' || 'blacksmith-2vcpu-ubuntu-2404' }}
     needs: check-version
     steps:
       - name: Create PR to Homebrew
