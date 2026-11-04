@@ -18,7 +18,7 @@ env:
 
 jobs:
   define-docker-image:
-    runs-on: ubuntu-latest
+    runs-on: ${{ vars.CI_RUNNER_PROVIDER == 'github' && 'ubuntu-24.04' || 'blacksmith-2vcpu-ubuntu-2404' }}
     outputs:
       docker-image: ${{ steps.define-image.outputs.docker-image }}
     steps:
@@ -45,7 +45,7 @@ jobs:
   meilisearch-dotnet-tests:
     needs: define-docker-image
     name: .NET SDK tests
-    runs-on: ubuntu-latest
+    runs-on: ${{ vars.CI_RUNNER_PROVIDER == 'github' && 'ubuntu-24.04' || 'blacksmith-2vcpu-ubuntu-2404' }}
     env:
       MEILISEARCH_VERSION: ${{ needs.define-docker-image.outputs.docker-image }}
 
@@ -69,7 +69,7 @@ jobs:
   meilisearch-dart-tests:
     needs: define-docker-image
     name: Dart SDK tests
-    runs-on: ubuntu-latest
+    runs-on: ${{ vars.CI_RUNNER_PROVIDER == 'github' && 'ubuntu-24.04' || 'blacksmith-2vcpu-ubuntu-2404' }}
     services:
       meilisearch:
         image: getmeili/meilisearch-enterprise:${{ needs.define-docker-image.outputs.docker-image }}
@@ -94,7 +94,7 @@ jobs:
   meilisearch-go-tests:
     needs: define-docker-image
     name: Go SDK tests
-    runs-on: ubuntu-latest
+    runs-on: ${{ vars.CI_RUNNER_PROVIDER == 'github' && 'ubuntu-24.04' || 'blacksmith-2vcpu-ubuntu-2404' }}
     services:
       meilisearch:
         image: getmeili/meilisearch-enterprise:${{ needs.define-docker-image.outputs.docker-image }}
@@ -120,7 +120,7 @@ jobs:
   meilisearch-java-tests:
     needs: define-docker-image
     name: Java SDK tests
-    runs-on: ubuntu-latest
+    runs-on: ${{ vars.CI_RUNNER_PROVIDER == 'github' && 'ubuntu-24.04' || 'blacksmith-2vcpu-ubuntu-2404' }}
     services:
       meilisearch:
         image: getmeili/meilisearch-enterprise:${{ needs.define-docker-image.outputs.docker-image }}
@@ -148,7 +148,7 @@ jobs:
   meilisearch-js-tests:
     needs: define-docker-image
     name: JS SDK tests
-    runs-on: ubuntu-latest
+    runs-on: ${{ vars.CI_RUNNER_PROVIDER == 'github' && 'ubuntu-24.04' || 'blacksmith-2vcpu-ubuntu-2404' }}
     services:
       meilisearch:
         image: getmeili/meilisearch-enterprise:${{ needs.define-docker-image.outputs.docker-image }}
@@ -178,7 +178,7 @@ jobs:
   meilisearch-php-tests:
     needs: define-docker-image
     name: PHP SDK tests
-    runs-on: ubuntu-latest
+    runs-on: ${{ vars.CI_RUNNER_PROVIDER == 'github' && 'ubuntu-24.04' || 'blacksmith-2vcpu-ubuntu-2404' }}
     services:
       meilisearch:
         image: getmeili/meilisearch-enterprise:${{ needs.define-docker-image.outputs.docker-image }}
@@ -208,7 +208,7 @@ jobs:
   meilisearch-python-tests:
     needs: define-docker-image
     name: Python SDK tests
-    runs-on: ubuntu-latest
+    runs-on: ${{ vars.CI_RUNNER_PROVIDER == 'github' && 'ubuntu-24.04' || 'blacksmith-2vcpu-ubuntu-2404' }}
     services:
       meilisearch:
         image: getmeili/meilisearch-enterprise:${{ needs.define-docker-image.outputs.docker-image }}
@@ -234,7 +234,7 @@ jobs:
   meilisearch-ruby-tests:
     needs: define-docker-image
     name: Ruby SDK tests
-    runs-on: ubuntu-latest
+    runs-on: ${{ vars.CI_RUNNER_PROVIDER == 'github' && 'ubuntu-24.04' || 'blacksmith-2vcpu-ubuntu-2404' }}
     services:
       meilisearch:
         image: getmeili/meilisearch-enterprise:${{ needs.define-docker-image.outputs.docker-image }}
@@ -260,7 +260,7 @@ jobs:
   meilisearch-rust-tests:
     needs: define-docker-image
     name: Rust SDK tests
-    runs-on: ubuntu-latest
+    runs-on: ${{ vars.CI_RUNNER_PROVIDER == 'github' && 'ubuntu-24.04' || 'blacksmith-2vcpu-ubuntu-2404' }}
     services:
       meilisearch:
         image: getmeili/meilisearch-enterprise:${{ needs.define-docker-image.outputs.docker-image }}
@@ -282,7 +282,7 @@ jobs:
   meilisearch-swift-tests:
     needs: define-docker-image
     name: Swift SDK tests
-    runs-on: ubuntu-latest
+    runs-on: ${{ vars.CI_RUNNER_PROVIDER == 'github' && 'ubuntu-24.04' || 'blacksmith-2vcpu-ubuntu-2404' }}
     services:
       meilisearch:
         image: getmeili/meilisearch-enterprise:${{ needs.define-docker-image.outputs.docker-image }}
@@ -306,7 +306,7 @@ jobs:
   meilisearch-js-plugins-tests:
     needs: define-docker-image
     name: meilisearch-js-plugins tests
-    runs-on: ubuntu-latest
+    runs-on: ${{ vars.CI_RUNNER_PROVIDER == 'github' && 'ubuntu-24.04' || 'blacksmith-2vcpu-ubuntu-2404' }}
     services:
       meilisearch:
         image: getmeili/meilisearch-enterprise:${{ needs.define-docker-image.outputs.docker-image }}
@@ -340,7 +340,7 @@ jobs:
   meilisearch-rails-tests:
     needs: define-docker-image
     name: meilisearch-rails tests
-    runs-on: ubuntu-latest
+    runs-on: ${{ vars.CI_RUNNER_PROVIDER == 'github' && 'ubuntu-24.04' || 'blacksmith-2vcpu-ubuntu-2404' }}
     services:
       meilisearch:
         image: getmeili/meilisearch-enterprise:${{ needs.define-docker-image.outputs.docker-image }}
@@ -373,7 +373,7 @@ jobs:
   meilisearch-symfony-tests:
     needs: define-docker-image
     name: meilisearch-symfony tests
-    runs-on: ubuntu-latest
+    runs-on: ${{ vars.CI_RUNNER_PROVIDER == 'github' && 'ubuntu-24.04' || 'blacksmith-2vcpu-ubuntu-2404' }}
     services:
       meilisearch:
         image: getmeili/meilisearch-enterprise:${{ needs.define-docker-image.outputs.docker-image }}

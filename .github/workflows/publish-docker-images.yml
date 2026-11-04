@@ -2,6 +2,7 @@ name: Publish images to Docker Hub
 
 on:
   push:
+    branches-ignore: ["**"]
     # Will run for every tag pushed except `latest`
     # When the `latest` git tag is created with this [CI](../latest-git-tag.yml)
     # we don't need to create a Docker `latest` image again.
@@ -15,7 +16,7 @@ on:
 
 jobs:
   build:
-    runs-on: ${{ matrix.runner }}
+    runs-on: ${{ vars.CI_RUNNER_PROVIDER != 'github' && fromJSON('{"ubuntu-latest":"blacksmith-2vcpu-ubuntu-2404","ubuntu-24.04":"blacksmith-2vcpu-ubuntu-2404","ubuntu-24.04-arm":"blacksmith-2vcpu-ubuntu-2404-arm","ubuntu-22.04":"blacksmith-2vcpu-ubuntu-2204","ubuntu-22.04-arm":"blacksmith-2vcpu-ubuntu-2204-arm"}')[matrix.runner] || matrix.runner }}
 
     strategy:
       matrix:
@@ -97,7 +98,7 @@ jobs:
           retention-days: 1
 
   merge:
-    runs-on: ubuntu-latest
+    runs-on: ${{ vars.CI_RUNNER_PROVIDER == 'github' && 'ubuntu-24.04' || 'blacksmith-2vcpu-ubuntu-2404' }}
     strategy:
       matrix:
         edition: [community, enterprise]
